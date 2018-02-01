@@ -28,7 +28,7 @@ describe('Test yandex.by|', function() {
        browser.wait(EC.elementToBeClickable(moreLink), 5000);
        moreLink.click();
 
-       element(by.css('.popup__content .home-tabs__more')).getAttribute("outerHTML").then((txt) => {
+       element(by.css('.popup__content .home-tabs__more')).getText().then((txt) => {
            return txt;
        }).catch(()=>{
            return false;
