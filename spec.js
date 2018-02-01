@@ -1,12 +1,13 @@
 describe('Test yandex.by|', function() {
 
+    //function from all test
     let EC = protractor.ExpectedConditions;
 
     function changeCity(city){
 
-        let elem = element(by.css('.link.geolink[data-statlog="head.region.setup"]'));
-        browser.wait(EC.elementToBeClickable(elem), 5000);
-        elem.click();
+        let linkCity = element(by.css('.link.geolink[data-statlog="head.region.setup"]'));
+        browser.wait(EC.elementToBeClickable(linkCity), 5000);
+        linkCity.click();
 
         let inputCity = element(by.id('city__front-input'));
         browser.wait(EC.elementToBeClickable(inputCity), 5000);
@@ -21,13 +22,13 @@ describe('Test yandex.by|', function() {
    }
 
 
-   function getInfoBlock(){
+   function getInfoMorePopup(){
 
-       let moreElem = element(by.css('a.home-link.home-tabs__more-switcher'));
-       browser.wait(EC.elementToBeClickable(moreElem), 5000);
-       moreElem.click();
+       let moreLink = element(by.css('a.home-link.home-tabs__more-switcher'));
+       browser.wait(EC.elementToBeClickable(moreLink), 5000);
+       moreLink.click();
 
-       let moreElem1 = element(by.css('.popup__content .home-tabs__more')).getAttribute("outerHTML").then((txt) => {
+       element(by.css('.popup__content .home-tabs__more')).getAttribute("outerHTML").then((txt) => {
            return txt;
        }).catch(()=>{
            return false;
@@ -35,30 +36,32 @@ describe('Test yandex.by|', function() {
 
    }
 
+    // steps from all test
     beforeAll(() => {
         browser.get('https://yandex.by/');
     });
 
     afterAll(() => {
-        browser.sleep(10000).then(function() {
-            console.log('waited 10 seconds');
+        browser.sleep(5000).then(function() {
+            console.log('waited 5 seconds');
         });
     });
 
+    // block test
     it('equals text block', function() {
 
         changeCity('Лондон ');
-        let londonMore = getInfoBlock();
+        let londonMore = getInfoMorePopup();
 
         browser.sleep(1000).then(function() {
             console.log('waited 1 seconds');
         });
 
         changeCity('Париж ');
-        let parigMore = getInfoBlock();
-        // let parigMore = false;
+        let parisMore = getInfoMorePopup();
+        // let parisMore = false;
 
-        expect(londonMore).toEqual(parigMore);
+        expect(londonMore).toEqual(parisMore);
     });
 
 });
