@@ -88,7 +88,7 @@ module.exports = {
 
     },
 
-    functionPausa: function (time){
+    functionPause: function (time){
         browser.sleep(time*1000).then(function() {
             console.log(`waited ${time} seconds`);
         });
