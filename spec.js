@@ -16,6 +16,9 @@ describe('Test yandex.by|', function() {
     it('equals text block', function() {
 
         libHelp.changeCity('Лондон ');
+        browser.sleep(1000).then(function() {
+            console.log('waited 1 seconds');
+        });
         let londonMore = libHelp.getInfoMorePopup();
 
         browser.sleep(1000).then(function() {
@@ -23,6 +26,9 @@ describe('Test yandex.by|', function() {
         });
 
         libHelp.changeCity('Париж ');
+        browser.sleep(1000).then(function() {
+            console.log('waited 1 seconds');
+        });
         let parisMore = libHelp.getInfoMorePopup();
         // let parisMore = false;
 
