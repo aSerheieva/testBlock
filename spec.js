@@ -3,32 +3,24 @@ const libHelp = require('./func_lib');
 describe('Test yandex.by|', function() {
     // steps from all test
     beforeAll(() => {
-        browser.get('https://yandex.by/');
+        libHelp.goToUrl('https://yandex.by/');
     });
 
     afterAll(() => {
-        browser.sleep(5000).then(function() {
-            console.log('waited 5 seconds');
-        });
+        libHelp.functionPausa(5);
     });
 
     // block test
     it('equals text block', function() {
 
         libHelp.changeCity('Лондон ');
-        browser.sleep(1000).then(function() {
-            console.log('waited 1 seconds');
-        });
+        libHelp.functionPausa(1);
         let londonMore = libHelp.getInfoMorePopup();
 
-        browser.sleep(1000).then(function() {
-            console.log('waited 1 seconds');
-        });
+        libHelp.functionPausa(1);
 
         libHelp.changeCity('Париж ');
-        browser.sleep(1000).then(function() {
-            console.log('waited 1 seconds');
-        });
+        libHelp.functionPausa(1);
         let parisMore = libHelp.getInfoMorePopup();
         // let parisMore = false;
 

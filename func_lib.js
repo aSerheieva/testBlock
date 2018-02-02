@@ -86,6 +86,16 @@ module.exports = {
             return false;
         });
 
+    },
+
+    functionPausa: function (time){
+        browser.sleep(time*1000).then(function() {
+            console.log(`waited ${time} seconds`);
+        });
+    },
+
+    goToUrl: function (url){
+        browser.get(url);
     }
 
 };
