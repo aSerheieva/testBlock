@@ -20,12 +20,11 @@ function timerMy(counter) {
 }
 
 //fuction myWait analogue  browser.wait (but worse)
-async function myWait(element, time, start=false) {
+function myWait(element, time, start=false) {
     if (!start){
         timerMy(time);
     }
-    try {
-        await element.isEnabled().then(
+    element.isEnabled().then(
         function (val) {
             if (!isTimeout){
                 isResault = val;
@@ -43,15 +42,6 @@ async function myWait(element, time, start=false) {
                 }
             }
         )
-    } catch (error) {
-        if (!isTimeout){
-            setTimeout( function () {
-                myWait(element, time, true);
-            }, 1000);
-        }else {
-            throw new Error(`${error.name} - error`);
-        }
-    }
 
 }
 
