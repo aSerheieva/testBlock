@@ -132,6 +132,12 @@ module.exports = {
         clickFun(by.css('.domik3 form button[type ="submit"]'));
         browser.sleep(5000).then(() =>{ console.log('login')});
     },
+
+    clickLink(locator){
+        let elemLoc = element(locator);
+        myWait(elemLoc, 30000);
+        elemLoc.click();
+    },
 };
 
 

@@ -50,5 +50,53 @@ describe('Test yandex.by|', function() {
         expect(invalidLogPass).toEqual(true);
     });
 
+    describe('check link yandex.by|', ()=> {
+        let link;
+
+        it('link video', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="video"]'));
+            link = libHelp.compareUrl('https://yandex.by/video/');
+            expect(link).toEqual(true);
+        });
+
+        it('link images', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="images"]'));
+            link = libHelp.compareUrl('https://yandex.by/images/');
+            expect(link).toEqual(true);
+        });
+
+        it('link news', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="news"]'));
+            link = libHelp.compareUrl('https://news.yandex.by/');
+            expect(link).toEqual(true);
+        });
+
+        it('link maps', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="maps"]'));
+            link = libHelp.compareUrl('https://yandex.by/maps/157/minsk/');
+            expect(link).toEqual(true);
+        });
+
+        it('link market', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="market"]'));
+            link = libHelp.compareUrl('https://market.yandex.by/?clid=505&utm_source=face_abovesearch&utm_campaign=face_abovesearch');
+            expect(link).toEqual(true);
+        });
+
+        it('link translate', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="translate"]'));
+            link = libHelp.compareUrl('https://translate.yandex.by/');
+            expect(link).toEqual(true);
+        });
+
+        it('link music', function() {
+            libHelp.clickLink(by.css('.home-tabs a[data-id="music"]'));
+            link = libHelp.compareUrl('https://music.yandex.by/home');
+            expect(link).toEqual(true);
+        });
+    });
+
+
+
 });
 
