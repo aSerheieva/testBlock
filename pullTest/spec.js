@@ -2,29 +2,34 @@ const libHelp = require('./func_lib');
 
 describe('Test yandex.by|', function() {
     // steps from all test
-    beforeAll(() => {
+    beforeEach(() => {
         libHelp.goToUrl('https://yandex.by/');
     });
 
-    afterAll(() => {
-        libHelp.functionPause(5);
+    afterEach(() => {
+        libHelp.functionPause(2);
     });
 
     // block test
-    it('equals text block', function() {
+    it('login ya mail', function() {
 
-        libHelp.changeCity('Лондон ');
-        libHelp.functionPause(1);
-        let londonMore = libHelp.getInfoMorePopup();
+        libHelp.logInFun();
+        let logIn = libHelp.compareText(by.css('.mail-User .mail-User-Name'), 'AutotestUser');
 
-        libHelp.functionPause(1);
+        expect(logIn).toEqual(true);
+        libHelp.logOutFun();
+    });
 
-        libHelp.changeCity('Париж ');
-        libHelp.functionPause(1);
-        let parisMore = libHelp.getInfoMorePopup();
-        // let parisMore = false;
+    it('logout ya mail', function() {
 
-        expect(londonMore).toEqual(parisMore);
+        libHelp.logInFun();
+        let logIn = libHelp.compareUrl('https://mail.yandex.by/?uid=590288369&login=autotestuser#inbox');
+        expect(logIn).toEqual(true);
+
+       libHelp.logOutFun();
+       let logOut = libHelp.compareUrl('https://yandex.by/');
+
+       expect(logOut).toEqual(true);
     });
 
 });

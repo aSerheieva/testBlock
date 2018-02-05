@@ -9,17 +9,20 @@ function timerMy(counter) {
         setTimeout(function () { timerMy(counter - 1) }, 1000);
     } else {
         isTimeout = true;
-        if (counter > 0) {
-            console.log('resault: ' + isResault);
-        } else {
+        if (!(counter > 0)) {
+        //     console.log('resault: ' + isResault);
+        // } else {
             throw new Error("timeOut_MY")
         }
 
     }
 }
 //fuction myWait analogue  browser.wait (but worse)
-function myWait(element, time, start=false) {
+ function myWait(element, time, start=false) {
     if (!start){
+        isResault = 'not Found';
+        isEdned = false;
+        isTimeout = false;
         timerMy(time);
     }
     element.isEnabled().then(
@@ -36,40 +39,76 @@ function myWait(element, time, start=false) {
                         myWait(element, time, true);
                     }, 1000);
                 }else {
-                    throw new Error(`${error.name} - error`);
+                    throw new Error(`${error} - error`);
                 }
             }
         )
 
 }
 
+
+function clickFun(locator){
+    let elemLoc = element(locator);
+    myWait(elemLoc, 30000);
+    elemLoc.click();
+}
+
+function sendKeysFun(locator, text) {
+
+    let elemLoc = element(locator);
+    myWait(elemLoc, 30000);
+    elemLoc.clear().sendKeys(text);
+
+    browser.sleep(1000).then(function() {
+        console.log('waited 1 seconds');
+    });
+}
+
 module.exports = {
-    functionPause: function (time){
+    functionPause: (time) => {
         browser.sleep(time*1000).then(function() {
             console.log(`waited ${time} seconds`);
         });
     },
 
-    goToUrl: function (url){
+    goToUrl: (url) => {
         browser.get(url);
     },
 
-    sendKeysFun: (locator, text)=>{
+    compareText: (locator, expextText) => {
 
-        myWait(locator, 30000);
-        locator.clear().sendKeys(text);
-
-        browser.sleep(1000).then(function() {
-            console.log('waited 1 seconds');
+        let elemLoc = element(locator);
+        myWait(elemLoc, 30000);
+        return elemLoc.getText().then((txt) => {
+            return (txt === expextText);
+        }).catch(()=>{
+            return false;
         });
+
     },
 
-    clickFun: (locator)=>{
 
-        myWait(locator, 30000);
-        locator.click();
+    logInFun: ()=>{
+        sendKeysFun(by.css('.domik3 form input[name="login"]'), 'AutotestUser' );
+        sendKeysFun(by.css('.domik3 form input[type="password"]'), 'AutotestUser123' );
+        clickFun(by.css('.domik3 form button[type ="submit"]'));
+        browser.sleep(5000).then(() =>{ console.log('login')});
     },
 
+    logOutFun: ()=>{
+        clickFun(by.css('div.mail-User'));
+        clickFun(by.css('.ui-dialog .b-mail-dropdown__item:last-child a'));
+        browser.sleep(2000).then(() =>{ console.log('logout')});
+    },
+
+
+
+    compareUrl: (expectUrl)=>{
+        browser.sleep(1000).then(() =>{ console.log('compareUrl')});
+        return browser.getCurrentUrl().then(function(actualUrl) {
+                return expectUrl === actualUrl;
+            });
+    }
 
 
 };
