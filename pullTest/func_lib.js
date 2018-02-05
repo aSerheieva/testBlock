@@ -124,9 +124,14 @@ module.exports = {
         sendKeysFun(by.css('.domik3 form input[type="password"]'), 'NoAutotestUser123' );
         clickFun(by.css('.domik3 form button[type ="submit"]'));
         browser.sleep(5000).then(() =>{ console.log('login')});
-    }
+    },
 
-
+    invalidLogin: ()=>{
+        sendKeysFun(by.css('.domik3 form input[name="login"]'), 'NoAutotestUser' );
+        sendKeysFun(by.css('.domik3 form input[type="password"]'), 'AutotestUser123' );
+        clickFun(by.css('.domik3 form button[type ="submit"]'));
+        browser.sleep(5000).then(() =>{ console.log('login')});
+    },
 };
 
 

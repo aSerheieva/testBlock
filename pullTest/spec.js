@@ -18,7 +18,6 @@ describe('Test yandex.by|', function() {
         let logIn = libHelp.compareText(by.css('.mail-User .mail-User-Name'), 'AutotestUser');
 
         expect(logIn).toEqual(true);
-        libHelp.logOutFun();
     });
 
     it('logout ya mail', function() {
@@ -39,6 +38,15 @@ describe('Test yandex.by|', function() {
         let url = libHelp.compareUrl('https://passport.yandex.by/passport?mode=auth&retpath=https://mail.yandex.by&backpath=https%3A%2F%2Fyandex.by');
         expect(url).toEqual(true);
         let invalidLogPass = libHelp.compareText(by.css('.passport-Domik-Form-Error.passport-Domik-Form-Error_active'), 'Неверный пароль');
+        expect(invalidLogPass).toEqual(true);
+    });
+
+    it('invalidLogin ya mail', function() {
+
+        libHelp.invalidLogin();
+        let url = libHelp.compareUrl('https://passport.yandex.by/passport?mode=auth&retpath=https://mail.yandex.by&backpath=https%3A%2F%2Fyandex.by');
+        expect(url).toEqual(true);
+        let invalidLogPass = libHelp.compareText(by.css('.passport-Domik-Form-Error.passport-Domik-Form-Error_active'), 'Такого аккаунта нет');
         expect(invalidLogPass).toEqual(true);
     });
 
