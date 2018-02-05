@@ -4,6 +4,7 @@ describe('Test yandex.by|', function() {
     // steps from all test
     beforeEach(() => {
         libHelp.goToUrl('https://yandex.by/');
+        libHelp.logOutBeforeFun();
     });
 
     afterEach(() => {
@@ -30,6 +31,15 @@ describe('Test yandex.by|', function() {
        let logOut = libHelp.compareUrl('https://yandex.by/');
 
        expect(logOut).toEqual(true);
+    });
+
+    it('invalidPassword ya mail', function() {
+
+        libHelp.invalidPass();
+        let url = libHelp.compareUrl('https://passport.yandex.by/passport?mode=auth&retpath=https://mail.yandex.by&backpath=https%3A%2F%2Fyandex.by');
+        expect(url).toEqual(true);
+        let invalidLogPass = libHelp.compareText(by.css('.passport-Domik-Form-Error.passport-Domik-Form-Error_active'), 'Неверный пароль');
+        expect(invalidLogPass).toEqual(true);
     });
 
 });

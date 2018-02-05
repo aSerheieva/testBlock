@@ -46,7 +46,6 @@ function timerMy(counter) {
 
 }
 
-
 function clickFun(locator){
     let elemLoc = element(locator);
     myWait(elemLoc, 30000);
@@ -87,7 +86,6 @@ module.exports = {
 
     },
 
-
     logInFun: ()=>{
         sendKeysFun(by.css('.domik3 form input[name="login"]'), 'AutotestUser' );
         sendKeysFun(by.css('.domik3 form input[type="password"]'), 'AutotestUser123' );
@@ -101,13 +99,31 @@ module.exports = {
         browser.sleep(2000).then(() =>{ console.log('logout')});
     },
 
-
+    logOutBeforeFun: ()=>{
+        browser.sleep(3000).then(() =>{ console.log('compareUrl')});
+        element(by.css('a.home-link.desk-notif-card__usermenu-switcher.home-link_black_yes')).isPresent().then(
+            (res)=>{
+                if (res){
+                    element(by.css('a.home-link.desk-notif-card__usermenu-switcher.home-link_black_yes')).click();
+                    element(by.css('a[data-statlog="mail.login.usermenu.exit"]')).click();
+                    browser.sleep(1000).then(() =>{ console.log('logout')});
+                }
+            }
+        );
+    },
 
     compareUrl: (expectUrl)=>{
         browser.sleep(1000).then(() =>{ console.log('compareUrl')});
         return browser.getCurrentUrl().then(function(actualUrl) {
                 return expectUrl === actualUrl;
             });
+    },
+
+    invalidPass: ()=>{
+        sendKeysFun(by.css('.domik3 form input[name="login"]'), 'AutotestUser' );
+        sendKeysFun(by.css('.domik3 form input[type="password"]'), 'NoAutotestUser123' );
+        clickFun(by.css('.domik3 form button[type ="submit"]'));
+        browser.sleep(5000).then(() =>{ console.log('login')});
     }
 
 
