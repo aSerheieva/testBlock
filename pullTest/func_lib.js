@@ -90,17 +90,17 @@ module.exports = {
         sendKeysFun(by.css('.domik3 form input[name="login"]'), 'AutotestUser' );
         sendKeysFun(by.css('.domik3 form input[type="password"]'), 'AutotestUser123' );
         clickFun(by.css('.domik3 form button[type ="submit"]'));
-        browser.sleep(5000).then(() =>{ console.log('login')});
+        browser.sleep(1000).then(() =>{ console.log('login')});
     },
 
     logOutFun: ()=>{
         clickFun(by.css('div.mail-User'));
         clickFun(by.css('.ui-dialog .b-mail-dropdown__item:last-child a'));
-        browser.sleep(2000).then(() =>{ console.log('logout')});
+        browser.sleep(1000).then(() =>{ console.log('logout')});
     },
 
     logOutBeforeFun: ()=>{
-        browser.sleep(3000).then(() =>{ console.log('compareUrl')});
+        browser.sleep(3000).then(() =>{ console.log('compareUrlLogout')});
         element(by.css('a.home-link.desk-notif-card__usermenu-switcher.home-link_black_yes')).isPresent().then(
             (res)=>{
                 if (res){
@@ -123,14 +123,14 @@ module.exports = {
         sendKeysFun(by.css('.domik3 form input[name="login"]'), 'AutotestUser' );
         sendKeysFun(by.css('.domik3 form input[type="password"]'), 'NoAutotestUser123' );
         clickFun(by.css('.domik3 form button[type ="submit"]'));
-        browser.sleep(5000).then(() =>{ console.log('login')});
+        browser.sleep(1000).then(() =>{ console.log('passwordInvalid')});
     },
 
     invalidLogin: ()=>{
         sendKeysFun(by.css('.domik3 form input[name="login"]'), 'NoAutotestUser' );
         sendKeysFun(by.css('.domik3 form input[type="password"]'), 'AutotestUser123' );
         clickFun(by.css('.domik3 form button[type ="submit"]'));
-        browser.sleep(5000).then(() =>{ console.log('login')});
+        browser.sleep(1000).then(() =>{ console.log('loginInvalis')});
     },
 
     clickLink(locator){
@@ -138,42 +138,60 @@ module.exports = {
         myWait(elemLoc, 30000);
         elemLoc.click();
     },
-};
 
+    changeLanguageEng: async ()=>{
+        let lanLink = element(by.css('.headline__bar-item:first-child a.link.link_black_yes.link_pseudo_yes'));
+        myWait(lanLink, 30000);
+        lanLink.click();
 
-/*
-    changeCity: function (city){
+        let indexLink = 'last-child';
 
-        let linkCity = element(by.css('.link.geolink[data-statlog="head.region.setup"]'));
-        myWait(linkCity, 30000);
-        linkCity.click();
-
-        let inputCity = element(by.id('city__front-input'));
-        myWait(inputCity, 30000);
-        inputCity.clear().sendKeys(city);
-
-        browser.sleep(1000).then(function() {
-            console.log('waited 1 seconds');
+        await element.all(by.css(' .popup__content li a span.b-langs__text')).each(function(element, index) {
+            element.getText().then(function (text) {
+                console.log(index, text);
+                if(text === 'Eng'){
+                    indexLink = index;
+                }
+            });
         });
 
-        myWait(element(by.css('.popup.popup_animate_no.input__popup_type_geo.popup_visibility_visible')), 5000);
-        element(by.css('.b-autocomplete-item.b-autocomplete-item_type_geo:first-child')).click();
-    },
+        if (indexLink === 'last-child'){
+            element(by.css('.popup__content ul li:last-child a')).click();
 
-    getInfoMorePopup: function (){
+            element(by.css(' button.button.select__button')).click();
 
-        let moreLink = element(by.css('a.home-link.home-tabs__more-switcher'));
-        myWait(moreLink, 30000);
-        moreLink.click();
+            let indexLanPage = 'not find';
+            await element.all(by.css(' .popup .popup__content .select__item')).each(function(element, index) {
+                element.getText().then(function (text) {
+                    console.log(index, text);
+                    if(text === 'English'){
+                        indexLanPage = index;
+                    }
+                });
+            });
 
-        element(by.css('.popup__content .home-tabs__more')).getText().then((txt) => {
-            return txt;
+            let selector = ` .popup .popup__content .select__item:nth-child(${indexLanPage+1})`;
+            element(by.css(selector)).click();
+            browser.sleep(1000).then(() =>{ console.log('')});
+            element(by.css('.form__controls button.button.form__save')).click();
+            browser.sleep(2000).then(() =>{ console.log('')});
+        }else{
+            let selector = `.popup__content li:nth-child(${indexLink}) a`;
+            element(by.css(selector)).click();
+        }
+
+        browser.get('https://yandex.by/');
+        lanLink.click();
+        element(by.css('.popup__content ul li:last-child a')).click();
+        browser.sleep(2000).then(() =>{ console.log('')});
+        return element(by.css('button.button.select__button span')).getText().then((txt) => {
+            return (txt === 'English');
         }).catch(()=>{
             return false;
         });
 
-    },
- */
+    }
+};
 
 
 

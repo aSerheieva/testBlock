@@ -8,7 +8,7 @@ describe('Test yandex.by|', function() {
     });
 
     afterEach(() => {
-        libHelp.functionPause(2);
+        libHelp.functionPause(1);
     });
 
     // block test
@@ -96,7 +96,10 @@ describe('Test yandex.by|', function() {
         });
     });
 
+    it('change language ya mail', function() {
 
+       let expectBool = libHelp.changeLanguageEng();
+        expect(expectBool).toEqual(true);
+    });
 
 });
-
