@@ -133,7 +133,7 @@ module.exports = {
         browser.sleep(1000).then(() =>{ console.log('loginInvalis')});
     },
 
-    clickLink(locator){
+    clickLink: (locator)=>{
         let elemLoc = element(locator);
         myWait(elemLoc, 30000);
         elemLoc.click();
